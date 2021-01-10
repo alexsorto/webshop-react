@@ -1,5 +1,4 @@
 .App {
-  text-align: center;
 }
 
 .App-logo {
@@ -7,32 +6,56 @@
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.App-header {
+  background-color: #2e3238;
+  color: white;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.welcome {
+  color: whitesmoke;
+
+}
+.storelogo {
+  height: 50px;
+  width: 50px;
 }
 
 .App-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.creds {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+}
+
+
+.header_1 {
+  background-color: grey;
+}
+
+.headerlist {
+  color: aliceblue;
+}
+
+.headerlist li a{
+  color: aliceblue;
+}
+
+.passmatcher {
+  color:"darkred"
+}
+
+.item {
+  border-style: groove;
+  border-width: 1px;
+  padding: 5px;
+  margin-top: 10px;
+  background-color: ivory;
+
+}
+
+.itemform {
+  margin: 50px;
+  border-style: double;
 }

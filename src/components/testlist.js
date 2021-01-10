@@ -1,0 +1,30 @@
+import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
+
+class Square extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        value: null,
+      };
+    }
+  
+    render() {
+      return (
+        <button
+          className="square"
+          onClick={() => this.setState({value: 'X'})}
+        >
+          {this.state.value}
+        </button>
+      );
+    }
+  }
+
+export default Square;
