@@ -19,7 +19,9 @@ class ItemContainer extends React.Component {
       this.state = {
         currentpage: 1, 
         displayedItems:[],
-        editView: this.props.editView
+        editView: false,
+        purchaseView: false,
+        userdata: {}
       };
 
       
@@ -42,16 +44,33 @@ class ItemContainer extends React.Component {
       this.props.handleRemove(item)
     }
 
-    componentWillReceiveProps(){
-       this.setState({})
-
+    componentDidMount(){
+      this.setState({
+        userdata:this.props.userdata
+      })
     }
-    
+    componentDidUpdate(){
+      if(this.props.userdata != this.state.userdata) {
+      this.setState({
+        userdata:this.props.userdata
+      })
+    }
+  }
     render() {
       console.log("Rendering item container")
+
       const items = []
       this.props.displayedItems.forEach(element => {
-        items.push(<Item handleEdit={this.forwardEdit} handleRemove={this.forwardRemove} itemData= {element} key={element._id} editView={this.state.editView}></Item>)
+        
+        let purchasable = false
+        if(this.props.purchaseView) {
+        purchasable = (element.ownerId === this.props.userdata._id) ? false : true;
+        }
+        items.push(
+        <Item handleEdit={this.forwardEdit} handleRemove={this.forwardRemove} itemData= {element} 
+          key={element._id} editView={this.props.editView} usercanbuy={purchasable} purchaseView={this.props.purchaseView}>
+
+          </Item>)
       });
       
         return (

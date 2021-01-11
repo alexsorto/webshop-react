@@ -15,8 +15,8 @@ class Login extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        username: 'uanem',
-        password:'pass',
+        username: '',
+        password:'',
         loginError:false};
 
       
@@ -49,6 +49,7 @@ class Login extends React.Component {
           .then((json) => {          
             if(json.OK == true){
                 console.log(json.message)
+                
                 this.setState({
                     loginError:false
                 })
@@ -85,7 +86,7 @@ class Login extends React.Component {
               <label for="lname">Password:</label><br></br>
               <input type="text" id="lname" name="lname"  value={this.state.password} onChange={this.handlePasswordChange}></input><br></br>
               <p id="loginstatus" style={loginErrorTagStyle}> Wrong username or password</p>
-              <input type="button" value="Submit" onClick={this.handleLogin}></input>
+              <input className="lightmargin" type="button" value="Submit" onClick={this.handleLogin}></input>
             </form>
           </div>
         );

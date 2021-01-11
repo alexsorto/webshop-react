@@ -21,7 +21,9 @@ class Storefront extends React.Component {
         currentpage: 1, 
         displayedItems:[],
         allItems:[],
-        search:''
+        search:'',
+        userdata:{},
+        purchaseView:false
     };
 
      const fetchedItems = []
@@ -61,6 +63,16 @@ class Storefront extends React.Component {
         this.setState({username: event.target.value});
       }
       
+    componentDidUpdate() {
+        if(this.props.userdata != this.state.userdata) {
+            let purchaseView = (this.state.userdata._id != null) ? true : false
+
+            this.setState({
+                userdata:this.props.userdata
+            })
+        }
+    }
+
     handleSearch(event) {
 
         let searchResults = []
@@ -78,7 +90,7 @@ class Storefront extends React.Component {
       }
     
     render() {
-
+        
 
         return (
           <div>
@@ -86,7 +98,7 @@ class Storefront extends React.Component {
             <label for="lname">Search:</label><br></br>
               <input type="text" id="lname" name="lname"  value={this.state.search} onChange={this.handleSearch}></input><br></br>
             <div className="container col-sm-12"> 
-                <ItemContainer displayedItems={this.state.displayedItems}></ItemContainer>
+                <ItemContainer displayedItems={this.state.displayedItems} purchaseView={this.props.loggedIn} editView={false} userdata={this.props.userdata}></ItemContainer>
             </div>
           </div>
         );

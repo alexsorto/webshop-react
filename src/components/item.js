@@ -19,7 +19,8 @@ import {
         loggedUserId : "",
         canBuy:false,
         editView:false,
-        itemData: this.props.itemData
+        purchaseView:false,
+        itemData: {}
       };
 
       
@@ -43,17 +44,34 @@ import {
     onRemove() {
       this.props.handleRemove(this.state.itemData)
     }
-    
+    componentDidMount() {
+      this.setState({
+        itemData:this.props.itemData,
+        canBuy: this.props.usercanbuy,
+        purchaseView:this.props.purchaseView
+      })
+    }
+
+    componentDidUpdate(lastprops){
+      console.log("Item did update")
+      if(this.props.itemData != this.state.itemData){
+        this.setState({
+          itemData:this.props.itemData,
+          canBuy: this.props.usercanbuy,
+          purchaseView:this.props.purchaseView
+        })
+      }
+    }
+
     render() {
+
+      console.log("RENDERING ITEM")
 
         let purchasableButtonStyle = {display:"none"}
 
-        if(this.props.canBuy){
-          purchasableButtonStyle = {display:"block"}
-        }
 
-        if(this.props.ownerId == this.props.itemData.ownerId){
-          purchasableButtonStyle = {display:"none"}
+        if(this.state.canBuy && this.state.purchaseView){
+          purchasableButtonStyle = {display:"block", "margin-top":"20px"}
         }
 
         let editViewStyle = {display:"none"}
@@ -63,15 +81,16 @@ import {
         }
 
         return (
-            <div className=" col-sm-4 col-sm-offset-1 item"> 
+            <div className=" col-sm-5 col-sm-offset-1 item"> 
               <div className="col-sm-8 text-left itemInfo">
-                <p> {this.state.itemData.name}</p>
+                <p className="itemname"> {this.state.itemData.name}</p>
                 <p className="itemdesc"> {this.state.itemData.description}</p>
-                <p> ${this.state.itemData.price}</p>
-                <input type="submit" value="Add to Cart" style={purchasableButtonStyle}></input>
-                <a className="col-sm-4" style={editViewStyle} onClick={this.onEdit}> Edit </a>
-                <a className="col-sm-4" style={editViewStyle} onClick={this.onRemove}> Remove </a>
-
+                <p className="itemprice"> ${this.state.itemData.price}</p>
+                <input valign="bottom" type="submit" value="Add to Cart" style={purchasableButtonStyle}></input>
+                <div className=" col-sm-12 itemeditbuttons">
+                <a className="col-sm-6" style={editViewStyle} onClick={this.onEdit}> Edit </a>
+                <a className="col-sm-6" style={editViewStyle} onClick={this.onRemove}> Remove </a>
+                </div>
                 {/* <img src={cart} className="cartIcon"></img> */}
 
               </div>

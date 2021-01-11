@@ -15,15 +15,16 @@ class EditForm extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        name: this.props.itemname,
-        description:this.props.selectedItem.description,
-        price:this.props.selectedItem.price,
-        selectedItem:this.props.selectedItem,
-        editing:this.props.editing,
+        name: "",
+        description:"",
+        price:"",
+        selectedItem:{},
+        editing:false,
         loginError:false,
         creationOk:false,
         formHeader:"Editing Item",
-        formStyle:this.props.formStyle
+        formStyle:{display:"none"},
+        prevItemId:''
       }
      
       
@@ -59,11 +60,15 @@ class EditForm extends React.Component {
       console.log("Trying to submit item")
 
       let data = {
-        "ownerId":"2",
+        "ownerId":this.state.selectedItem.ownerId,
         "name":this.state.name, 
         "description":this.state.description, 
         "price":this.state.price,
-        "type":"item"}
+        "type":"item",
+        "_rev":this.state.selectedItem._rev,
+        "_id":this.state.selectedItem._id,
+
+        }
 
       fetch('http://127.0.0.1:8000/api/createItem', {
           method: "POST",
@@ -74,6 +79,8 @@ class EditForm extends React.Component {
         .then((json) => {          
           if(json.OK == true){
               console.log(json.message)
+              this.props.onEditOk(json)
+              
               this.setState({
                   loginError:false,
                   creationOk:true,
@@ -94,12 +101,31 @@ class EditForm extends React.Component {
         }); 
     }
 
+    componentDidMount() {
+      console.log("edit did mount")
+
+    }
+
+    componentDidUpdate(prevProps) {
+      if(this.state.selectedItem._id != this.props.selectedItem._id) {
+        console.log("DIR UPDATE")
+        this.setState({
+          prevItemId:this.props.selectedItem._id,
+          selectedItem:this.props.selectedItem,
+          name: this.props.selectedItem.name,
+          description: this.props.selectedItem.description,
+          price: this.props.selectedItem.price
+
+        })
+      }
+
+    }
 
     render() {
 
 
         console.log("Redering edit form")
-        console.log(this.state.selectedItem)
+        console.log(this.props.selectedItem.name)
 
         let loginErrorTagStyle = {display:"none", color:"darkred"}
         let creationOkTagStyle = {display:"none", color:"darkgreen"}
@@ -109,21 +135,23 @@ class EditForm extends React.Component {
             loginErrorTagStyle = {display:"block", color:"darkred"}
             creationOkTagStyle = {display:"none", color:"darkgreen"}
         }
+        let newStyle = this.props.editing ? {display:"block"} : {display:"none"}
 
-
+        console.log("editfrom")
+        console.log(newStyle)
 
 
 
         return (
-          <div style={this.state.formStyle} className="col-sm-8 itemform">
+          <div style={newStyle} className="col-sm-8 editform">
             <h2>Editing Item</h2>
             <form>
               <label for="fname">Name:</label><br></br>
-              <input type="text" id="fname" name="fname" value={this.state.name} onKeyUp={this.handleNameChange}></input><br></br>
+              <input type="text" id="fname" name="fname" value={this.state.name} onChange={this.handleNameChange}></input><br></br>
               <label for="lname">Description:</label><br></br>
-              <input type="text" id="lname" name="lname"  value={this.state.description} onKeyUp={this.handleDescriptionChange}></input><br></br>
+              <input type="text" id="lname" name="lname"  value={this.state.description} onChange={this.handleDescriptionChange}></input><br></br>
               <label for="lname">Price:</label><br></br>
-              <input type="text" id="lname" name="lname"  value={this.state.price} onKeyUp={this.handlePriceChange}></input><br></br>
+              <input type="text" id="lname" name="lname"  value={this.state.price} onChange={this.handlePriceChange}></input><br></br>
               <p style={loginErrorTagStyle}> Error, empty field</p><br></br>
               <p style={creationOkTagStyle}> Creation OK, Please reload page</p><br></br>
 

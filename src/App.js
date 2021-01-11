@@ -4,13 +4,17 @@ import Login from './components/login'
 import Register from './components/register'
 import Storefront from './components/storefront'
 import Inventory from './components/inventory'
+import EditAccount from './components/editaccount'
+
+import { Redirect } from "react-router-dom";
 
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  withRouter 
 } from "react-router-dom";
 
 
@@ -28,7 +32,7 @@ class App extends React.Component {
       loggedIn:false,
       userData:{},
       loggedInvisibleStyle:{display:"block"},
-      loggedVisibleStyle:{display:"none"}
+      loggedVisibleStyle:{display:"none"},
 
     }
     this.logUserIn = this.logUserIn.bind(this);
@@ -39,6 +43,7 @@ class App extends React.Component {
     console.log("Reported login!");
     console.log(userdata)
     this.setState({
+      userData:userdata,
       loggedIn:true,
       loggedInvisibleStyle:{display:"none"},
       loggedVisibleStyle:{display:"block"}
@@ -46,23 +51,24 @@ class App extends React.Component {
     })
   }
 
+
+  componentDidUpdate(){
+
+  }
 render() {
-
-
 
   return (
     
     <div className="App">
     <Router>
       <div className="container-fluid header_1">
-          <div className="col-sm-12 text-center welcome">
-            <h1 >Welcome</h1>
-          </div>
 
           <div className="col-sm-2  col-sm-push-10 creds">
           <ul  className="headerlist">
 
-
+          <li className="usernametag" style={this.state.loggedVisibleStyle}>
+            <Link to="/account">{this.state.userData.username}</Link>
+          </li>
           <li style={this.state.loggedInvisibleStyle}>
             <Link to="/">Sign-in</Link>
           </li>
@@ -85,16 +91,19 @@ render() {
     <div  className="container col-sm-12 text-center"  >
       <Switch >
           <Route exact path="/">
-            <Login app_atlogin={this.logUserIn}/>
+            {this.state.loggedIn ?  <Redirect to="/inventory" /> : <Login app_atlogin={this.logUserIn}/>}
           </Route>
           <Route path="/register">
             <Register/>
           </Route>
           <Route path="/storefront">
-            <Storefront />
+            <Storefront userdata={this.state.userData} loggedIn={this.state.loggedIn}/>
           </Route>
           <Route path="/inventory">
-            <Inventory />
+            <Inventory userinfo={this.state.userData}/>
+          </Route>
+          <Route path="/account">
+            <EditAccount userinfo={this.state.userData}/>
           </Route>
       </Switch>
       </div>

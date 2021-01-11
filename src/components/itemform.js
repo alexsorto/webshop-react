@@ -22,8 +22,8 @@ class ItemForm extends React.Component {
         editing:this.props.editing,
         loginError:false,
         creationOk:false,
-        formStyle:this.props.formStyle
-
+        formStyle:{display:"block"},
+        userdata: {}
       }
 
       console.log(this.props.editing);
@@ -51,16 +51,26 @@ class ItemForm extends React.Component {
     handlePriceChange(event) {
         this.setState({price: event.target.value});
     }
+
+    componentDidMount(){
+
+      this.setState({
+        userdata:this.props.userdata,
+        formStyle:this.props.formStyle
+      })
+      
+  }
     
     handleSubmit(event) {
-      console.log("Trying to submit item")
-
+      console.log("SUBMITTING")
       let data = {
-        "ownerId":"2",
+        "ownerId":this.props.userdata._id,
         "name":this.state.name, 
         "description":this.state.description, 
         "price":this.state.price,
-        "type":"item"}
+        "type":"item"
+      }
+
 
       fetch('http://127.0.0.1:8000/api/createItem', {
           method: "POST",
@@ -96,18 +106,15 @@ class ItemForm extends React.Component {
 
     render() {
 
-        console.log("Rendering item from")
 
         let loginErrorTagStyle = {display:"none", color:"darkred"}
         let creationOkTagStyle = {display:"none", color:"darkgreen"}
-        let fromHeader = "Create Item"
 
-        if(this.props.editing) {
-          console.log("Editing")
-          fromHeader = "Editing Item"
-  
-          this.setState()
-        }
+        let fromHeader = "Create Item"
+        let newStyle = this.props.editing? {display:"none"} : {display:"block"}
+
+        console.log("Itemfrom")
+        console.log(this.props.editing)
 
         if(this.state.loginError) {
             loginErrorTagStyle = {display:"block", color:"darkred"}
@@ -118,7 +125,7 @@ class ItemForm extends React.Component {
 
 
         return (
-          <div style={this.state.formStyle} className="col-sm-8 itemform">
+          <div style={newStyle} className="col-sm-8 itemform">
             <h2>{fromHeader}</h2>
             <form>
               <label for="fname">Name:</label><br></br>

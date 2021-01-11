@@ -1,6 +1,8 @@
 .App {
 }
-
+a {
+  cursor: pointer;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -47,15 +49,72 @@
 }
 
 .item {
-  border-style: groove;
+  border-style: double;
   border-width: 1px;
   padding: 5px;
   margin-top: 10px;
-  background-color: ivory;
+  background-color:lightsteelblue;
+  height: 200px;
+  border-radius: 4px;
+  
+}
 
+.item:hover {
+  background-color: lightgray;
+  border: 4px dotted #634a43;
+  background: lightgray;
+}
+
+.itemprice{
+font-weight: 500;
 }
 
 .itemform {
   margin: 50px;
-  border-style: double;
+  border-style: dotted;
+    background-color: slateblue;
+  border-radius: 10px;
+}
+
+.itemdesc {
+  height: 70px;
+  overflow: clip;
+}
+
+.itemname {
+  font-weight: bold;
+}
+
+.itemcontainer {
+  background-color: lavender;
+}
+
+.usernametag {
+  font-weight: bolder !important
+}
+.cpasswordlabel {
+  margin: 20px;
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.editform {
+  margin: 50px;
+  border-style: dotted;
+  background-color: slateblue;
+  border-radius: 10px;
+
+}
+.lightmargin {
+  margin: 10px;
+}
+
+.itemeditbuttons {
+  margin-top: 60px;
+}
+
+.itemImage {
+  background-color: slategray;
+  height: 70%;
+  padding: 10px;
 }
