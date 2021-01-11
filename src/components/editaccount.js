@@ -79,7 +79,7 @@ class EditAccount extends React.Component {
 
       let data = {"username":this.props.userinfo.username, "password":this.state.oldpassword, "newpassword":this.state.password}
 
-      fetch('http://127.0.0.1:8000/api/changepassword', {
+      fetch('https://murmuring-wave-81772.herokuapp.com/api/changepassword', {
           method: "POST",
           body: JSON.stringify(data),
           headers: {"Content-type": "application/json;charset=UTF-8"}

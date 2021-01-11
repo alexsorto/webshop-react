@@ -70,7 +70,7 @@ class EditForm extends React.Component {
 
         }
 
-      fetch('http://127.0.0.1:8000/api/createItem', {
+      fetch('https://murmuring-wave-81772.herokuapp.com/api/createItem', {
           method: "POST",
           body: JSON.stringify(data),
           headers: {"Content-type": "application/json;charset=UTF-8"}

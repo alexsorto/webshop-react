@@ -46,7 +46,7 @@ class Inventory extends React.Component {
         const fetchedItems = []
         let data = {"ownerId":this.props.userinfo._id}
    
-        fetch('http://127.0.0.1:8000/api/getitemsforuser', {
+        fetch('https://murmuring-wave-81772.herokuapp.com/api/getitemsforuser', {
             method: "POST",
             body: JSON.stringify(data),
             headers: {"Content-type": "application/json;charset=UTF-8"}
@@ -165,7 +165,7 @@ class Inventory extends React.Component {
         let data = {"_id":item._id}
         let loginErrorHere = false
 
-        fetch('http://127.0.0.1:8000/api/removeItem', {
+        fetch('https://murmuring-wave-81772.herokuapp.com/api/removeItem', {
             method: "POST",
             body: JSON.stringify(data),
             headers: {"Content-type": "application/json;charset=UTF-8"}

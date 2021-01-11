@@ -40,7 +40,7 @@ class Login extends React.Component {
 
         let data = {"username":this.state.username, "password":this.state.password}
 
-        fetch('http://127.0.0.1:8000/api/login', {
+        fetch('https://murmuring-wave-81772.herokuapp.com/api/login', {
             method: "POST",
             body: JSON.stringify(data),
             headers: {"Content-type": "application/json;charset=UTF-8"}

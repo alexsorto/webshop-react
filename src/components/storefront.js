@@ -29,7 +29,7 @@ class Storefront extends React.Component {
      const fetchedItems = []
 
      if(this.state.displayedItems.length == 0) {
-     fetch('http://127.0.0.1:8000/api/getallitems', {
+     fetch('https://murmuring-wave-81772.herokuapp.com/api/getallitems', {
          method: "GET",
          headers: {"Content-type": "application/json;charset=UTF-8"}
        })
